@@ -1,0 +1,56 @@
+﻿@model WebApplication2.Models.Student
+
+@{
+    ViewData["Title"] = "Edit Student";
+}
+
+<div class="container mt-4">
+    <h2>Edit Student</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- Hidden Input for Student ID -->
+                <input type="hidden" asp-for="Id" />
+
+                <!-- Student Name -->
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="control-label fw-bold mb-1">Student Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <!-- Student Age -->
+                <div class="form-group mb-3">
+                    <label asp-for="Age" class="control-label fw-bold mb-1">Age</label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+
+                <!-- Department Dropdown (from ViewBag with current selection) -->
+                <div class="form-group mb-3">
+                    <label asp-for="DepartmentId" class="control-label fw-bold mb-1">Department</label>
+                    <select asp-for="DepartmentId" class="form-control" asp-items="@(new SelectList(ViewBag.Departments, "Id", "Name", Model.DepartmentId))">
+                        <option value="">-- Select Department --</option>
+                    </select>
+                    <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-warning text-dark me-2">Save Changes</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

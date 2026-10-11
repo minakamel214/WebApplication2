@@ -1,0 +1,54 @@
+﻿@model WebApplication2.Models.Student
+
+@{
+    ViewData["Title"] = "Delete Student";
+}
+
+<div class="container mt-4">
+    <h2 class="text-danger">Delete Student</h2>
+    <h3 class="text-warning">Are you sure you want to delete this student?</h3>
+    <hr />
+
+    <div class="col-md-6">
+        <div>
+            <!-- Student ID -->
+            <div class="form-group mb-3">
+                <label class="control-label fw-bold mb-1">ID</label>
+                <p class="form-control-static">@Model.Id</p>
+            </div>
+
+            <!-- Student Name -->
+            <div class="form-group mb-3">
+                <label class="control-label fw-bold mb-1">Student Name</label>
+                <p class="form-control-static">@Model.Name</p>
+            </div>
+
+            <!-- Student Age -->
+            <div class="form-group mb-3">
+                <label class="control-label fw-bold mb-1">Age</label>
+                <p class="form-control-static">@Model.Age</p>
+            </div>
+
+            <!-- Department (Optional: finding matching department name from ViewBag) -->
+            <div class="form-group mb-3">
+                <label class="control-label fw-bold mb-1">Department</label>
+                <p class="form-control-static">
+                    @{
+                        var departments = ViewBag.Departments as List<WebApplication2.Models.Department>;
+                        var deptName = departments?.FirstOrDefault(d => d.Id == Model.DepartmentId)?.Name ?? "N/A";
+                    }
+                    @deptName
+                </p>
+            </div>
+
+            <!-- Delete Form Confirmation -->
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-danger me-2">Yes, Delete</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
